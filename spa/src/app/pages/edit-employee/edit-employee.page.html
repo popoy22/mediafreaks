@@ -1,0 +1,242 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['/employees']" routerDirection="back">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentAlertConfirm()">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Edit Employee</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="detail">
+        <ion-label>Detail</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="password">
+        <ion-label>Password</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="segment == 'detail'">
+    <ion-grid *ngIf="employee">
+      <ion-row>
+        <ion-col class="ion-text-center" size-md="4" offset-md="4">
+          <form
+            class="text-center border border-light p-5"
+            [formGroup]="registerForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <ion-list>
+              <ion-item-divider color="medium">
+                <ion-label>
+                  Employee Detail
+                </ion-label>
+              </ion-item-divider>
+              <ion-item>
+                <ion-label position="stacked"
+                  >First Name
+                  <small class="error" *ngIf="f.firstname.invalid">
+                    <ng-container *ngIf="f.firstname.errors.required"
+                      >First Name is Required<br />
+                    </ng-container>
+                    <ng-container *ngIf="f.firstname.errors.maxlength"
+                      >First Name is too long (maximum is 30 characters)<br />
+                    </ng-container> </small
+                ></ion-label>
+                <ion-input type="text" formControlName="firstname"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked"
+                  >Last Name
+                  <small class="error" *ngIf="f.lastname.invalid">
+                    <ng-container *ngIf="f.lastname.errors.required"
+                      >Last Name is Required<br />
+                    </ng-container>
+                    <ng-container *ngIf="f.lastname.errors.maxlength"
+                      >Last Name is too long (maximum is 30 characters)<br />
+                    </ng-container> </small
+                ></ion-label>
+                <ion-input type="text" formControlName="lastname"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >Gender
+                  <small class="error" *ngIf="f.gender.invalid"
+                    >Gender is Required</small
+                  ></ion-label
+                >
+                <ion-select placeholder="" formControlName="gender">
+                  <ion-select-option value="M">Male</ion-select-option>
+                  <ion-select-option value="F">Female</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >BirthDate
+                  <small class="error" *ngIf="f.birthdate.invalid"
+                    >Birthdate is Required</small
+                  ></ion-label
+                >
+                <ion-datetime formControlName="birthdate"></ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >E-mail
+                  <small class="error" *ngIf="f.email.invalid">
+                    <ng-container *ngIf="f.email.errors.required"
+                      >E-mail is Required</ng-container
+                    >
+                    <ng-container *ngIf="f.email.errors.email"
+                      >E-mail is Invalid
+                    </ng-container>
+                  </small></ion-label
+                >
+                <ion-input type="email" formControlName="email"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >Administrator
+                  <small class="error" *ngIf="f.admin.invalid"
+                    >Administrator is Required</small
+                  ></ion-label
+                >
+                <ion-select placeholder="" formControlName="admin">
+                  <ion-select-option value="1">Yes</ion-select-option>
+                  <ion-select-option value="0">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >Phone Number
+                  <small class="error" *ngIf="f.phone.invalid">
+                    <ng-container *ngIf="f.phone.errors.required"
+                      >Phone Number is Required<br />
+                    </ng-container>
+                    <ng-container *ngIf="f.phone.errors.minlength"
+                      >Phone Number must be 6 to 8 Characters<br />
+                    </ng-container>
+                    <ng-container *ngIf="f.phone.errors.maxlength"
+                      >Phone Number must be 6 to 8 Characters<br />
+                    </ng-container>
+                    <ng-container *ngIf="f.phone.errors.pattern">
+                      Phone Number must be Numeric
+                    </ng-container>
+                  </small></ion-label
+                >
+                <ion-input
+                  type="text"
+                  formControlName="phone"
+                  required
+                ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >Address
+                  <small class="error" *ngIf="f.address.invalid"
+                    >Address is Required</small
+                  ></ion-label
+                >
+                <ion-textarea formControlName="address" required></ion-textarea>
+              </ion-item>
+            </ion-list>
+
+            <ion-button
+              class="ion-padding"
+              type="submit"
+              color="dark"
+              size="md"
+              expand="full"
+              [disabled]="registerForm.invalid"
+              >Save</ion-button
+            >
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  <ng-container *ngIf="segment == 'password'">
+    <ion-grid *ngIf="employee">
+      <ion-row>
+        <ion-col class="ion-text-center" size-md="4" offset-md="4">
+          <form
+            class="text-center border border-light p-5"
+            [formGroup]="passwordForm"
+            (ngSubmit)="changePassword()"
+          >
+            <ion-list>
+              <ion-item-divider color="medium">
+                <ion-label>
+                  Change Password
+                </ion-label>
+              </ion-item-divider>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >Password
+                  <small class="error" *ngIf="p.password.invalid">
+                    <ng-container *ngIf="p.password.errors.required"
+                      >Password is Required<br />
+                    </ng-container>
+                    <ng-container *ngIf="p.password.errors.minlength"
+                      >Passwords must be at least 8 characters in length<br />
+                    </ng-container>
+                    <ng-container *ngIf="p.password.errors.pattern"
+                      >Password must contain letters and numbers<br />
+                    </ng-container> </small
+                ></ion-label>
+                <ion-input
+                  type="password"
+                  formControlName="password"
+                ></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked"
+                  >Confirm Password
+                  <small class="error" *ngIf="p.confirm_password.invalid">
+                    <ng-container *ngIf="p.confirm_password.errors.required"
+                      >Confirm Password is Required<br />
+                    </ng-container>
+                    <ng-container *ngIf="p.confirm_password.errors.pattern"
+                      >The password confirmation does not match.<br />
+                    </ng-container>
+                  </small>
+                </ion-label>
+
+                <ion-input
+                  type="password"
+                  formControlName="confirm_password"
+                  [pattern]="p.password.value"
+                ></ion-input>
+              </ion-item>
+            </ion-list>
+
+            <ion-button
+              class="ion-padding"
+              type="submit"
+              color="dark"
+              size="md"
+              expand="full"
+              [disabled]="passwordForm.invalid"
+              >Change Password</ion-button
+            >
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+</ion-content>

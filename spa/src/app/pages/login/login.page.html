@@ -1,0 +1,36 @@
+<ion-content>
+  <ion-grid *ngIf="loginForm" class="loginForm">
+    <ion-row>
+      <ion-col class="ion-text-center" size-md="2" offset-md="5">
+        <form
+          class="text-center border border-light p-5"
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <ion-list mode="md">
+            <ion-item>
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input
+                type="text"
+                formControlName="email"
+                required
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+          </ion-list>
+          <ion-button
+            type="submit"
+            color="primary"
+            size="md"
+            expand="full"
+            [disabled]="!loginForm.valid"
+            >Login</ion-button
+          >
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
